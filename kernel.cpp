@@ -11,12 +11,12 @@ void printf(char* str)
 }
 typedef void (*constructor)();                  //定义一个函数指针类型，指向空返回值空参数的函数
 
-extern "C" constructor star_ctors;              //定义kernel前的构造函数地址组（.init_array）的起点
-extern "C" constructor star_end;                //定义终点
+extern "C" constructor start_ctors;              //定义kernel前的构造函数地址组（.init_array）的起点
+extern "C" constructor end_ctors;                //定义终点
 
 extern "C" void callConstructors()              //调用所有kernel运行前的构造函数
 {
-    for(constructor* i=&star_ctors;i != &star_end;i++ )
+    for(constructor* i=&start_ctors;i != &end_ctors;i++ )
     {
         (*i)();
     }
