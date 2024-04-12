@@ -9,6 +9,19 @@ void printf(char* str)
         videoMemory[i]=(videoMemory[i]&0xFF00) | str[i];//输出白色字符
     }
 }
+typedef void (*constructor)();                  //定义一个函数指针类型，指向空返回值空参数的函数
+
+extern "C" constructor star_ctors;              //定义kernel前的构造函数地址组（.init_array）的起点
+extern "C" constructor star_end;                //定义终点
+
+extern "C" void callConstructors()              //调用所有kernel运行前的构造函数
+{
+    for(constructor* i=&star_ctors;i != &star_end;i++ )
+    {
+        (*i)();
+    }
+}
+
 extern "C" void kernelMain(void* multibootStructure,unsigned int magicNumber)   //extern "C"让编译器按照c语言的链接约定编译该函数
                                                                                 //使得g++在编译时不改变函数名称，让loader可以找到该函数
 {
