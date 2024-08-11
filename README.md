@@ -30,4 +30,4 @@
  ## 章节三 Global Descriptor Table
  这一章写了gdt，但是目前只用了base limit 和界限力度，但是界限粒度没有很清晰的说明。
  ## 章节四  Hardware-Communication / Ports
- 
+ 为硬件通信编写了接口，实现了一个更好的print
